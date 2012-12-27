@@ -5,9 +5,9 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $artistOrm = new Application_Model_DbTable_Artist();
+
+        $this->view->artists = $artistOrm->fetchAll();
     }
-
-
 }
 
