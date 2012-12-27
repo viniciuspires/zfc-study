@@ -1,0 +1,22 @@
+a:link, a:visited {
+    color: #0398CA;
+}
+span#zf-name {
+    color: #91BE3F;
+}
+div#welcome {
+    color: #444444;
+	font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    background-color: #F0F0F0;
+    width:  600px;
+    height: 400px;
+    border: 2px solid #444444;
+    overflow: hidden;
+    text-align: center;
+    margin: 0px auto;
+}
+div#more-information {
+    height: 100%;
+}
