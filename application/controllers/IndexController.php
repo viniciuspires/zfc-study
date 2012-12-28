@@ -5,9 +5,11 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $artistOrm = new Application_Model_DbTable_Artist();
+        // $artistOrm = new Application_Model_DbTable_Artist();
+        // $this->view->artists = $artistOrm->fetchAll();
 
-        $this->view->artists = $artistOrm->fetchAll();
+
+        $this->view->zendVersion = Zend_Version::VERSION;
     }
 }
 
