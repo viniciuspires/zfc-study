@@ -27,7 +27,7 @@ class CustomStorage implements Zend_Auth_Storage_Interface
      * @return void
      */
     public function write($contents) {
-
+        
     }
 
     /**
