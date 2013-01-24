@@ -1,7 +1,9 @@
 <?php
 // Loading autoloader LOL :D
 require_once 'Zend/Loader.php';
-Zend_Loader::registerAutoload(); 
+Zend_Loader::registerAutoload();
+
+echo Zend_Version::VERSION . PHP_EOL;
 
 // Auth is singleton, no __construct, no __clone by outside. Just getInstance.
 $auth = Zend_Auth::getInstance();
@@ -41,7 +43,6 @@ class CustomStorage implements Zend_Auth_Storage_Interface
     }
 }
 
-$auth->setStorage( new CustomStorage() );
+// $auth->setStorage( new CustomStorage() );
 
-
-print_r($auth->getStorage());
+var_dump( $auth->getStorage() );
