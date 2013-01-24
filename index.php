@@ -15,7 +15,7 @@ foreach( $dir as $d ) {
 <ul>
 <?php foreach($itens as $item): ?>
 	<li>
-		<a href="<?= $item; ?>"><?= $item; ?></a>
+		<a href="<?php echo $item; ?>"><?php echo $item; ?></a>
 	</li>
 <?php endforeach; ?>
 </ul>
