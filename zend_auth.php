@@ -5,20 +5,17 @@ Zend_Loader::registerAutoload();
 
 echo Zend_Version::VERSION . PHP_EOL;
 
-// Auth is singleton, no __construct, no __clone by outside. Just getInstance.
-$auth = Zend_Auth::getInstance();
-
-class CustomStorage implements Zend_Auth_Storage_Interface
+class FileStorage implements Zend_Auth_Storage_Interface
 {
 	/* Must return true if storage is empty, false otherwise
 	or throw a Zend_Auth_Storage_Exception if can't say if it's empty */
     public function isEmpty() {
-
+        return file_get_contents('teste.txt') == '';
     }
     /* Must return the contents from the storage and throws
     Zend_Auth_Storage_Exception if can't read storage */
     public function read() {
-
+        return file_get_contents('teste.txt');
     }
 
     /**
@@ -29,7 +26,9 @@ class CustomStorage implements Zend_Auth_Storage_Interface
      * @return void
      */
     public function write($contents) {
-        
+        $handle = fopen('teste.txt', 'w');
+        fwrite($contents, $handle);
+        fclose($handle);
     }
 
     /**
@@ -39,10 +38,44 @@ class CustomStorage implements Zend_Auth_Storage_Interface
      * @return void
      */
     public function clear() {
-
+        $handle = fopen('teste.txt', 'w');
+        fwrite('', $handle);
+        fclose($handle);
     }
 }
 
-// $auth->setStorage( new CustomStorage() );
+// $auth->setStorage( new FileStorage() );
 
-var_dump( $auth->getStorage() );
+$user = 'admin';
+$passwd = 'admin';
+
+$options = array(
+    'host'    =>'localhost',
+    'username'=>'root',
+    'password'=>'root',
+    'dbname'  =>'zend_auth'
+);
+$dbAdapter = new Zend_Db_Adapter_Pdo_Mysql( $options );
+
+$adapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+
+$adapter->setTableName('user');
+
+$adapter->setIdentityColumn('login');
+$adapter->setIdentity($user);
+
+$adapter->setCredentialColumn('password');
+$adapter->setCredential($passwd);
+
+$adapter->setCredentialTreatment('md5(?)');
+
+// Auth is singleton, no __construct, no __clone by outside. Just getInstance.
+$auth = Zend_Auth::getInstance();
+
+$result = $auth->authenticate( $adapter );
+
+$messages = $result->getMessages();
+
+foreach ( $messages as $message ) {
+    echo "[{$result->getCode()}] - {$message} (identity: {$result->getIdentity()})";
+}
