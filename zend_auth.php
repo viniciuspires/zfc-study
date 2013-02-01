@@ -47,7 +47,7 @@ class FileStorage implements Zend_Auth_Storage_Interface
 // $auth->setStorage( new FileStorage() );
 
 $user = 'admin';
-$passwd = 'admin';
+$passwd = 'batatinha quando nasce se esparrama pelo chão';
 
 $options = array(
     'host'    =>'localhost',
@@ -62,9 +62,10 @@ $adapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $adapter->setTableName('user');
 
 $adapter->setIdentityColumn('login');
-$adapter->setIdentity($user);
-
 $adapter->setCredentialColumn('password');
+
+
+$adapter->setIdentity($user);
 $adapter->setCredential($passwd);
 
 $adapter->setCredentialTreatment('md5(?)');
