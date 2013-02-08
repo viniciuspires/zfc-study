@@ -16,6 +16,10 @@ $acl->addRole($manageador);
 
 $acl->addRole($admin, array('Oreia', $manageador));
 
-Zend_Debug::dump( $acl );
-
 # Resources
+$products = new Zend_Acl_Resource('Product');
+
+$acl->add( $products );
+
+
+Zend_Debug::dump( $acl );
