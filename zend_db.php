@@ -4,36 +4,55 @@ header('Content-type: text/plain; charset=UTF-8');
 require 'Zend/Loader.php';
 Zend_Loader::registerAutoload();
 
+echo Zend_Version::VERSION . PHP_EOL;
+
 $dbAdapter = new Zend_Db_Adapter_Pdo_Mysql(array(
 	'host'     => 'localhost',
 	'username' => 'root',
 	'password' => 'root',
-	'dbname'   => 'db_gm_sisgm'
+	'dbname'   => 'zend_auth',
+	'options'  => array(
+		Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
+	)
 ));
 
-/*function camelcalize( $string )
+class User extends Zend_Db_Table_Abstract
 {
-	return str_replace(' ', '',
-		ucwords(
-			str_replace('_', ' ',
-				strtolower($string)
-			)
+	protected $_name = 'users';
+	protected $_primary = 'id';
+	protected $_dependentTables = array('UserGroup');
+}
+
+class Group extends Zend_Db_Table_Abstract
+{
+	protected $_name = 'groups';
+	protected $_primary = 'id';
+	protected $_dependentTables = array('UserGroup');
+}
+
+class UserGroup extends Zend_Db_Table_Abstract
+{
+	protected $_name = 'users_x_groups';
+	protected $_primary = array('group_id','user_id');
+
+	protected $_referenceMap = array(
+		'Group' => array(
+			'columns'		=> 'group_id',
+			'refTableClass' => 'Group',
+			'refColumns'	=> 'id'
+		),
+		'User' => array(
+			'columns'       => 'user_id',
+			'refTableClass' => 'User',
+			'refColumns'    => 'id'
 		)
 	);
 }
 
-$classes = array();
-foreach( $dbAdapter->listTables() as $table ) {
-	if ( strpos($table, 'tb_') === 0 ) {
-		$class = camelcalize( str_replace('tb_', '', $table) );
+$u  = new User( $dbAdapter );
+$g  = new Group( $dbAdapter );
+$ug = new UserGroup( $dbAdapter );
 
-		$id = array_shift($dbAdapter->describeTable($table));
+$user = $u->find(1)->current();
 
-		eval('class '.$class.' extends Zend_Db_Table_Abstract {
-			protected $_name = \''.$table.'\';
-			protected $_primary = array(\''.$id['COLUMN_NAME'].'\');
-		}');
-
-		$classes[] = new $class( array( 'db'=>$dbAdapter ) );
-	}
-}*/
+print_r( $user );
