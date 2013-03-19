@@ -1,6 +1,4 @@
-<?php
-require 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 echo Zend_Version::VERSION;
 

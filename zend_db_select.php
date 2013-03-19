@@ -1,6 +1,4 @@
-<?php
-require 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 $db = Zend_Db::factory('Pdo_Mysql', array(
 	'host'     => 'localhost',
@@ -20,6 +18,6 @@ $select = $db->select()
 			 ->order('u.id DESC')
 			 ->limit(10,20);
 
-Zend_Debug::dump( $select );
+print_r( $select );
 
 echo $select;

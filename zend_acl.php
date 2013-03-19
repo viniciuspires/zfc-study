@@ -1,8 +1,4 @@
-<?php
-header('Content-type: text/plain');
-
-require 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 echo Zend_Version::VERSION . PHP_EOL;
 

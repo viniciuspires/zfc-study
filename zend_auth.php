@@ -1,7 +1,4 @@
-<?php
-// Loading autoloader LOL :D
-require_once 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 echo Zend_Version::VERSION . PHP_EOL;
 

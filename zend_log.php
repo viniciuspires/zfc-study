@@ -1,5 +1,4 @@
-<?php include 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 class JavascriptFormatter implements Zend_Log_Formatter_Interface {
 	public function format($event) {

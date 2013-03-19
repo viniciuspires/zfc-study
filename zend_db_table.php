@@ -1,8 +1,4 @@
-<?php
-header('Content-type: text/plain; charset=UTF-8');
-
-require 'Zend/Loader.php';
-Zend_Loader::registerAutoload();
+<?php require 'ini.php';
 
 $dbAdapter = new Zend_Db_Adapter_Pdo_Mysql(array(
 	'host'     => 'localhost',
